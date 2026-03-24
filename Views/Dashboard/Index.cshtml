@@ -1,0 +1,99 @@
+﻿@model EventEase.Models.DashboardViewModel
+
+<div class="container mt-4">
+
+    <h2 class="fw-bold mb-4">EventEase Admin Dashboard</h2>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-3">
+                <h5>Total Venues</h5>
+                <h2 class="text-primary">@Model.VenueCount</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-3">
+                <h5>Total Events</h5>
+                <h2 class="text-success">@Model.EventCount</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-3">
+                <h5>Total Bookings</h5>
+                <h2 class="text-danger">@Model.BookingCount</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card shadow-sm p-3 mb-4">
+        <h4 class="fw-semibold mb-3">Quick Actions</h4>
+        <a href="/Venues/Create" class="btn btn-primary me-2">Add Venue</a>
+        <a href="/Events/Create" class="btn btn-success me-2">Add Event</a>
+        <a href="/Bookings/Create" class="btn btn-danger">Add Booking</a>
+    </div>
+
+    <!-- Upcoming Events -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3 mb-4">
+                <h5 class="fw-semibold">Upcoming Events</h5>
+                <ul class="list-group">
+                    @foreach (var e in Model.UpcomingEvents)
+                    {
+                        <li class="list-group-item">
+                            <strong>@e.EventName</strong>
+                            <span class="text-muted">(@e.EventDate.ToShortDateString())</span>
+                        </li>
+                    }
+
+                    @if (!Model.UpcomingEvents.Any())
+                    {
+                        <li class="list-group-item text-muted">No upcoming events</li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <!-- Recent Bookings -->
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3 mb-4">
+                <h5 class="fw-semibold">Recent Bookings</h5>
+                <ul class="list-group">
+                    @foreach (var b in Model.RecentBookings)
+                    {
+                        <li class="list-group-item">
+                            <strong>@b.Event.EventName</strong>
+                            booked for
+                            <strong>@b.Venue.VenueName</strong>
+                            <span class="text-muted">(@b.BookingDate.ToShortDateString())</span>
+                        </li>
+                    }
+
+                    @if (!Model.RecentBookings.Any())
+                    {
+                        <li class="list-group-item text-muted">No recent bookings</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2>Dashboard</h2>
+
+    <div class="card">
+        <h3>Total Venues: @Model.VenueCount</h3>
+    </div>
+
+    <div class="card">
+        <h3>Total Events: @Model.EventCount</h3>
+    </div>
+
+    <div class="card">
+        <h3>Total Bookings: @Model.BookingCount</h3>
+    </div>
+
+</div>
